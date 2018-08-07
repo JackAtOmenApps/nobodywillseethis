@@ -1,0 +1,5 @@
+[run]
+include = nobody_will_see_this/*
+omit = *migrations*, *tests*
+plugins =
+    django_coverage_plugin
