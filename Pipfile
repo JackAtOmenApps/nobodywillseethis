@@ -38,6 +38,7 @@ djangorestframework-datatables = "*"
 django-extensions = "*"
 raven = "*"
 gunicorn = "*"
+pygraphviz = "*"
 
 [dev-packages]
 
