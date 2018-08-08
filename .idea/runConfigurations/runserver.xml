@@ -17,6 +17,13 @@
       <env name="DJANGO_ALLOWED_HOSTS" value="127.0.0.1" />
       <env name="DJANGO_DEBUG" value="True" />
       <env name="ATOMIC_REQUESTS" value="True" />
+      <env name="CELERY_BROKER_URL" value="redis://localhost:6379" />
+      <env name="REDIS_URL" value="redis://localhost:6379" />
+      <env name="DJANGO_PRAW_USERNAME" value="i_saw_your_post" />
+      <env name="DJANGO_PRAW_PASSWORD" value="H9j$5*2*AuWMXUPWWf" />
+      <env name="DJANGO_PRAW_CLIENT_ID" value="qk6QG8G0kcQbtg" />
+      <env name="DJANGO_PRAW_CLIENT_SECRET" value="r39-9gwI484BeXzoZ5j4sQVkiNw" />
+      <env name="DJANGO_PRAW_USER_AGENT" value="'i_saw_your_post reddit post identification tool v0.3'" />
     </envs>
     <option name="SDK_HOME" value="" />
     <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />

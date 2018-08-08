@@ -1,6 +1,7 @@
 from __future__ import absolute_import
 from django.conf import settings
 from celery import shared_task
+from celery.utils.log import get_task_logger
 from .models import Comment
 
 import praw
@@ -8,6 +9,10 @@ import regex as regex
 import time
 import os
 import sys
+import logging
+
+logger = get_task_logger(__name__)
+
 
 
 @shared_task
@@ -28,23 +33,28 @@ def xsum(numbers):
 @shared_task
 def begin_process(is_true=True):
     while is_true:
+        logger.info('Beginning Bot Task')
         reddit = praw.Reddit(username=settings.PRAW_USERNAME,
                              password=settings.PRAW_PASSWORD,
                              client_id=settings.PRAW_CLIENT_ID,
                              client_secret=settings.PRAW_CLIENT_SECRET,
                              user_agent=settings.PRAW_USER_AGENT)
 
+        logger.info('Logged in to Reddit')
+
         subreddit = reddit.subreddit('all')
 
         run_num = 0
 
         while True:
+            logger.info('Beginning Loop')
+
             for comments in subreddit.stream.comments():
                 run_num = run_num + 1
                 if run_num % 1000 == 0:
-                    print('Still running (currently on run ' + str(run_num) + ')')
-                    print('Most recent comment: ' + comments.name + ': ' + comments.body)
-                # print('Run #: ' + str(run_num))
+                    logger.info('Still running (currently on run ' + str(run_num) + ')')
+                    #logger.info('Most recent comment: ' + comments.name + ': ' + comments.body)
+                # logger.info('Run #: ' + str(run_num))
                 process_comment(comments)
 
 
@@ -60,7 +70,7 @@ def process_comment(comments):
             m = pat.search(sentence, pos)
 
             if m:
-                print('Comment identified. comment_id: ' + comments.id)
+                logger.info('Comment identified. comment_id: ' + comments.id)
 
                 Comment.objects.create(subreddit_id=comments.subreddit_id,
                     subreddit=comments.subreddit,
