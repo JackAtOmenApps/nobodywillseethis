@@ -3,6 +3,7 @@ Base settings to build other settings files upon.
 """
 
 import environ
+#import django
 
 ROOT_DIR = environ.Path(__file__) - 3  # (nobody_will_see_this/config/settings/base.py - 3 = nobody_will_see_this/)
 APPS_DIR = ROOT_DIR.path('nobody_will_see_this')
@@ -37,11 +38,22 @@ USE_TZ = True
 # DATABASES
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
-
 DATABASES = {
-    'default': env.db('DATABASE_URL', default='postgres:///nobody_will_see_this'),
+    #'default': env.db('DATABASE_URL', default='postgres://localhost/watervize'),
+    'default': {
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'NAME': 'nobody',
+        'USER': 'nobody',
+        'PASSWORD': env('DATABASE_PASS', default='pass'),
+        'HOST': 'localhost',  # Or an IP Address that your DB is hosted on
+        'PORT': '5432',
+        'ATOMIC_REQUESTS': True
+    }
 }
-DATABASES['default']['ATOMIC_REQUESTS'] = True
+#DATABASES['default']['ATOMIC_REQUESTS'] = True
+#DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
+
+CONN_MAX_AGE = 10
 
 # URLS
 # ------------------------------------------------------------------------------
@@ -61,13 +73,19 @@ DJANGO_APPS = [
     'django.contrib.staticfiles',
     # 'django.contrib.humanize', # Handy template tags
     'django.contrib.admin',
+    'django.forms',
 ]
 THIRD_PARTY_APPS = [
     'crispy_forms',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+    'corsheaders',
     'rest_framework',
+    'rest_framework_datatables',
+    'bootstrap4',
+    'django_extensions',
+    'extra_views',
 ]
 LOCAL_APPS = [
     'nobody_will_see_this.users.apps.UsersAppConfig',
@@ -212,7 +230,7 @@ EMAIL_BACKEND = env('DJANGO_EMAIL_BACKEND', default='django.core.mail.backends.s
 # ADMIN
 # ------------------------------------------------------------------------------
 # Django Admin URL.
-ADMIN_URL = 'admin/'
+ADMIN_URL = 'jds783892fh3yu2ghif84huycr3g6iur32ygtfr76g8c2ewh3td78ci34ouryv/'
 # https://docs.djangoproject.com/en/dev/ref/settings/#admins
 ADMINS = [
     ("""Omen Apps""", 'support@omenapps.com'),

@@ -31,6 +31,9 @@ Werkzeug = "==0.14.1"
 Sphinx = "==1.7.6"
 factory_boy = "==2.11.1"
 django_coverage_plugin = "==1.5.0"
+praw = "*"
+django-extra-views = "*"
+djangorestframework-datatables = "*"
 
 [dev-packages]
 
