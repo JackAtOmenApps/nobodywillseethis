@@ -22,6 +22,4 @@ coreapi==2.3.3  # https://github.com/core-api/python-client
 Celery
 praw
 django-extra-views
-djangorestframework-datatables
-django-extensions
 

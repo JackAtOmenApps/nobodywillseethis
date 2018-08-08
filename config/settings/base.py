@@ -84,8 +84,8 @@ THIRD_PARTY_APPS = [
     'rest_framework',
     'rest_framework_datatables',
     'bootstrap4',
-    'django_extensions',
-    'extra_views',
+    #'django_extensions',
+    #'extra_views',
 ]
 LOCAL_APPS = [
     'nobody_will_see_this.users.apps.UsersAppConfig',
