@@ -42,8 +42,8 @@ DATABASES = {
     #'default': env.db('DATABASE_URL', default='postgres://localhost/watervize'),
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'nobody',
-        'USER': 'nobody',
+        'NAME': 'nwst',
+        'USER': 'nwst',
         'PASSWORD': env('DATABASE_PASS', default='pass'),
         'HOST': 'localhost',  # Or an IP Address that your DB is hosted on
         'PORT': '5432',
@@ -238,6 +238,8 @@ ADMINS = [
 # https://docs.djangoproject.com/en/dev/ref/settings/#managers
 MANAGERS = ADMINS
 
+
+'''
 # Celery
 # ------------------------------------------------------------------------------
 INSTALLED_APPS += ['nobody_will_see_this.taskapp.celery.CeleryAppConfig']
@@ -260,6 +262,9 @@ CELERYD_TASK_TIME_LIMIT = 5 * 60
 # http://docs.celeryproject.org/en/latest/userguide/configuration.html#task-soft-time-limit
 # TODO: set to whatever value is adequate in your circumstances
 CELERYD_TASK_SOFT_TIME_LIMIT = 60
+'''
+
+
 # django-allauth
 # ------------------------------------------------------------------------------
 ACCOUNT_ALLOW_REGISTRATION = env.bool('DJANGO_ACCOUNT_ALLOW_REGISTRATION', True)
