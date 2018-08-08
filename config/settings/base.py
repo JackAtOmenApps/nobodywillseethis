@@ -83,7 +83,7 @@ THIRD_PARTY_APPS = [
     'corsheaders',
     'rest_framework',
     'rest_framework_datatables',
-    'bootstrap4',
+    #'bootstrap4',
     #'django_extensions',
     #'extra_views',
 ]
@@ -240,7 +240,7 @@ ADMINS = [
 MANAGERS = ADMINS
 
 
-'''
+
 # Celery
 # ------------------------------------------------------------------------------
 INSTALLED_APPS += ['nobody_will_see_this.taskapp.celery.CeleryAppConfig']
@@ -263,7 +263,7 @@ CELERYD_TASK_TIME_LIMIT = 5 * 60
 # http://docs.celeryproject.org/en/latest/userguide/configuration.html#task-soft-time-limit
 # TODO: set to whatever value is adequate in your circumstances
 CELERYD_TASK_SOFT_TIME_LIMIT = 60
-'''
+
 
 
 # django-allauth
@@ -281,6 +281,22 @@ ACCOUNT_ADAPTER = 'nobody_will_see_this.users.adapters.AccountAdapter'
 SOCIALACCOUNT_ADAPTER = 'nobody_will_see_this.users.adapters.SocialAccountAdapter'
 
 
+# CACHES
+# ------------------------------------------------------------------------------
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': env('REDIS_URL'),
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+            # Mimicing memcache behavior.
+            # http://niwinz.github.io/django-redis/latest/#_memcached_exceptions_behavior
+            'IGNORE_EXCEPTIONS': True,
+        }
+    }
+}#REDIS_URL
+
+
 # Your stuff...
 # ------------------------------------------------------------------------------
 
@@ -292,6 +308,5 @@ PRAW_PASSWORD = env('DJANGO_PRAW_PASSWORD', default='')
 PRAW_CLIENT_ID = env('DJANGO_PRAW_CLIENT_ID', default='')
 PRAW_CLIENT_SECRET = env('DJANGO_PRAW_CLIENT_SECRET', default='')
 PRAW_USER_AGENT = env('DJANGO_PRAW_USER_AGENT', default='')
-PRAW_USERNAME = env('DJANGO_PRAW_', default='')
 
 

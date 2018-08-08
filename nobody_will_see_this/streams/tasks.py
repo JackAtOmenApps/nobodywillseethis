@@ -43,15 +43,16 @@ def begin_process(is_true=True):
                 run_num = run_num + 1
                 if run_num % 1000 == 0:
                     print('Still running (currently on run ' + str(run_num) + ')')
+                    print('Most recent comment: ' + comments.name + ': ' + comments.body)
                 # print('Run #: ' + str(run_num))
-                process_comment(comments, conn)
+                process_comment(comments)
 
 
-def process_comment(comments, conn):
+def process_comment(comments):
     ''' Processes each comment, looking for fuzzy matches in the comment body. '''
-    comments_saved = read_comment_ids(conn)
 
-    if comments.id not in comments_saved and not comments.author == 'i_saw_your_post':
+    if not Comment.objects.filter(name=comments.name).exists() and not comments.author == settings.PRAW_USERNAME:
+
         for sentence in regex.split(r'(?<=[.?!;])\s+(?=\p{Lu})', comments.body.lower()):
             # Performs matching within the comment body text
             pat = regex.compile(r'one will see |one will ever see |body will see |body will ever see ')
@@ -59,39 +60,23 @@ def process_comment(comments, conn):
             m = pat.search(sentence, pos)
 
             if m:
-                print('Comment identified. comment_if: ' + comments.id)
+                print('Comment identified. comment_id: ' + comments.id)
 
-                global comment_count
-                comment_count = comment_count + 1
-
-                with conn:
-                    new_comment = (
-                    float(comments.created), str(comments.id), str(comments.link_id), str(comments.author),
-                    str(remove_non_ascii(comments.body)), str(comments.permalink), str(comments.subreddit))
-                    new_comment_id = add_comment(conn, new_comment)
-                    conn.commit()
+                Comment.objects.create(subreddit_id=comments.subreddit_id,
+                    subreddit=comments.subreddit,
+                    link_id=comments.link_id,
+                    parent_id=comments.parent_id,
+                    name=comments.name,
+                    author=comments.author,
+                    body=comments.body,
+                    score=comments.score,
+                    downs=comments.downs,
+                    edited=comments.edited,
+                    permalink=comments.permalink,
+                    created_utc=comments.created_utc,)
 
 
 def remove_non_ascii(text):
-    return regex.sub(r'[^\x20-\x7E]',' ', text)
-
-
-def add_comment(conn, comment):
-    ''' '''
-    sql = ''' INSERT INTO comments(created, comment_id, submission_id, author, comment_body, permalink, subreddit)
-              VALUES(?, ?, ?, ?, ?, ?, ?) '''
-    cur = conn.cursor()
-    cur.execute(sql, comment)
-    return cur.lastrowid
-
-
-def read_comment_ids(conn):
-    ''' Reads list of comment IDs from the database '''
-    cur = conn.cursor()
-    cur.execute("SELECT comment_id FROM comments")
-
-    rows = cur.fetchall()
-
-    return rows
+    return regex.sub(r'[^\x20-\x7E]', ' ', text)
 
 
