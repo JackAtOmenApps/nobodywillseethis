@@ -90,6 +90,7 @@ THIRD_PARTY_APPS = [
 LOCAL_APPS = [
     'nobody_will_see_this.users.apps.UsersAppConfig',
     # Your stuff: custom apps go here
+    'nobody_will_see_this.streams',
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -282,3 +283,15 @@ SOCIALACCOUNT_ADAPTER = 'nobody_will_see_this.users.adapters.SocialAccountAdapte
 
 # Your stuff...
 # ------------------------------------------------------------------------------
+
+# PRAW
+# ------------------------------------------------------------------------------
+# https://
+PRAW_USERNAME = env('DJANGO_PRAW_USERNAME', default='')
+PRAW_PASSWORD = env('DJANGO_PRAW_PASSWORD', default='')
+PRAW_CLIENT_ID = env('DJANGO_PRAW_CLIENT_ID', default='')
+PRAW_CLIENT_SECRET = env('DJANGO_PRAW_CLIENT_SECRET', default='')
+PRAW_USER_AGENT = env('DJANGO_PRAW_USER_AGENT', default='')
+PRAW_USERNAME = env('DJANGO_PRAW_', default='')
+
+

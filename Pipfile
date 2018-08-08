@@ -39,6 +39,7 @@ django-extensions = "*"
 raven = "*"
 gunicorn = "*"
 pygraphviz = "*"
+regex = "*"
 
 [dev-packages]
 
