@@ -36,6 +36,8 @@ django-cors-headers = "*"
 "django-bootstrap4" = "*"
 djangorestframework-datatables = "*"
 django-extensions = "*"
+raven = "*"
+gunicorn = "*"
 
 [dev-packages]
 
